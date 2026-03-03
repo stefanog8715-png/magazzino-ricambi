@@ -42,14 +42,14 @@ textarea { resize: vertical; min-height: 80px; }
 #camera-container.open { display: flex; }
 #video { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
 #canvas-ar { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.cam-ui { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.75)); display: flex; flex-direction: column; align-items: center; gap: 14px; }
-.cam-instructions { color: white; font-size: 14px; text-align: center; background: rgba(0,0,0,0.4); padding: 8px 16px; border-radius: 20px; }
+.cam-ui { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.cam-instructions { color: white; font-size: 14px; text-align: center; background: rgba(0,0,0,0.5); padding: 10px 18px; border-radius: 20px; max-width: 320px; line-height: 1.4; }
 .cam-btn-row { display: flex; gap: 16px; align-items: center; }
-.cam-snap { width: 68px; height: 68px; border-radius: 50%; background: white; border: 4px solid rgba(255,255,255,0.4); cursor: pointer; }
+.cam-snap { width: 72px; height: 72px; border-radius: 50%; background: white; border: 5px solid rgba(255,255,255,0.4); cursor: pointer; flex-shrink: 0; }
 .cam-snap:active { transform: scale(0.93); }
-.cam-close { background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 18px; border-radius: 20px; font-size: 14px; cursor: pointer; }
+.cam-close { background: rgba(255,255,255,0.18); border: none; color: white; padding: 12px 20px; border-radius: 20px; font-size: 14px; cursor: pointer; }
 .cam-top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(rgba(0,0,0,0.5), transparent); display: flex; align-items: center; gap: 12px; }
-.cam-code-badge { background: rgba(26,86,219,0.85); color: white; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; }
+.cam-code-badge { background: rgba(26,86,219,0.9); color: white; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; }
 .steps { display: flex; align-items: center; margin-bottom: 20px; }
 .step { display: flex; align-items: center; gap: 6px; flex: 1; }
 .step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; transition: all 0.2s; }
@@ -73,40 +73,51 @@ textarea { resize: vertical; min-height: 80px; }
 .ricambio-misure { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .tag { background: var(--blue-light); color: var(--blue-dark); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
 .tag.green { background: #d1fae5; color: #065f46; }
-.ricambio-note { font-size: 13px; color: var(--gray); font-style: italic; }
-.ricambio-thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; margin-left: 10px; flex-shrink: 0; }
+.ricambio-note { font-size: 13px; color: var(--gray); font-style: italic; margin-top: 4px; }
+.ricambio-thumb { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; margin-left: 10px; flex-shrink: 0; }
 .empty { text-align: center; padding: 40px 20px; color: var(--gray); }
 .empty .icon { font-size: 48px; margin-bottom: 12px; }
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid var(--border); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom,0); }
-.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0; border: none; background: none; cursor: pointer; color: var(--gray); font-size: 11px; gap: 3px; -webkit-tap-highlight-color: transparent; transition: color 0.15s; }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0; border: none; background: none; cursor: pointer; color: var(--gray); font-size: 11px; gap: 3px; -webkit-tap-highlight-color: transparent; }
 .nav-btn.active { color: var(--blue); }
 .nav-btn .ni { font-size: 22px; }
 .main-content { padding-bottom: 80px; }
-.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1f2937; color: white; padding: 12px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; }
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1f2937; color: white; padding: 12px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.ref-options { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.ref-opt { border: 2px solid var(--border); border-radius: 10px; padding: 10px 6px; text-align: center; cursor: pointer; transition: all 0.15s; background: white; }
-.ref-opt.selected { border-color: var(--blue); background: var(--blue-light); }
-.ref-opt .ri { font-size: 24px; }
-.ref-opt .rn { font-size: 11px; font-weight: 600; margin-top: 4px; color: #374151; }
-.ref-opt .rs { font-size: 10px; color: var(--gray); }
-.ar-result-overlay { position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%); background: rgba(0,0,0,0.75); border: 2px solid #00ff88; border-radius: 12px; padding: 14px 20px; color: white; text-align: center; display: none; }
-.ar-result-overlay.show { display: block; }
-.ar-dims { font-size: 22px; font-weight: 800; color: #00ff88; }
-.scan-frame { position: absolute; inset: 15%; pointer-events: none; }
-.sc { position: absolute; width: 24px; height: 24px; border-color: #00ff88; border-style: solid; }
-.sc.tl { top:0;left:0;border-width:3px 0 0 3px; }
-.sc.tr { top:0;right:0;border-width:3px 3px 0 0; }
-.sc.bl { bottom:0;left:0;border-width:0 0 3px 3px; }
-.sc.br { bottom:0;right:0;border-width:0 3px 3px 0; }
-.scan-line { position:absolute; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,#00ff88,transparent); animation:scan 2s linear infinite; }
-@keyframes scan { from{top:10%} to{top:90%} }
+/* AR status badge */
+.ar-status {
+  position: absolute; top: 70px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(0,0,0,0.6); border-radius: 20px; padding: 6px 14px;
+  backdrop-filter: blur(6px);
+}
+.ar-dot { width: 10px; height: 10px; border-radius: 50%; background: #aaa; flex-shrink: 0; }
+.ar-dot.found { background: #00ff88; box-shadow: 0 0 6px #00ff88; }
+.ar-dot.searching { background: #f59e0b; animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.ar-status-text { font-size: 12px; color: white; white-space: nowrap; }
+/* Scan guide overlay */
+.scan-guide {
+  position: absolute; inset: 0; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.scan-guide-inner {
+  border: 2px dashed rgba(255,255,255,0.3);
+  border-radius: 12px;
+  width: 85%; height: 55%;
+  position: relative;
+}
+.corner { position: absolute; width: 20px; height: 20px; border-color: white; border-style: solid; }
+.corner.tl { top:-2px; left:-2px; border-width: 3px 0 0 3px; }
+.corner.tr { top:-2px; right:-2px; border-width: 3px 3px 0 0; }
+.corner.bl { bottom:-2px; left:-2px; border-width: 0 0 3px 3px; }
+.corner.br { bottom:-2px; right:-2px; border-width: 0 3px 3px 0; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div><h1>📦 MisuraRicambi</h1><span>Ghibli & Wirbel — Magazzino</span></div>
+  <div><h1>📦 MisuraRicambi</h1><span>Ghibli &amp; Wirbel — Magazzino</span></div>
   <span class="badge-count" id="headerCount">0 pezzi</span>
 </div>
 
@@ -144,27 +155,21 @@ textarea { resize: vertical; min-height: 80px; }
     </div>
 
     <div id="form-step2" style="display:none;">
-      <div class="card">
-        <div class="card-title">📐 Oggetto di Riferimento</div>
-        <p style="font-size:13px;color:var(--gray);margin-bottom:12px;">Metti accanto al pezzo un oggetto noto per calibrare la scala AR:</p>
-        <div class="ref-options">
-          <div class="ref-opt selected" onclick="selectRef(this,'A4',210,297)">
-            <div class="ri">📄</div><div class="rn">Foglio A4</div><div class="rs">210×297mm</div>
+      <div class="card" style="background:#fffbeb;border:1px solid #fcd34d;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="font-size:28px;">💳</span>
+          <div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">Prepara la carta di credito</div>
+            <div style="font-size:13px;color:#78350f;line-height:1.5;">
+              Posiziona la carta <strong>piatta accanto al pezzo</strong> sul tavolo bianco.<br>
+              Tienila ben visibile — serve per calibrare la scala.
+            </div>
           </div>
-          <div class="ref-opt" onclick="selectRef(this,'Carta',85.6,54)">
-            <div class="ri">💳</div><div class="rn">Carta</div><div class="rs">85.6×54mm</div>
-          </div>
-          <div class="ref-opt" onclick="selectRef(this,'Righello',300,30)">
-            <div class="ri">📏</div><div class="rn">Righello</div><div class="rs">300×30mm</div>
-          </div>
-        </div>
-        <div style="font-size:12px;color:#92400e;background:#fef3c7;padding:10px;border-radius:8px;">
-          💡 Posiziona il riferimento <strong>sullo stesso piano</strong> del pezzo, visibile nell'inquadratura
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">📸 Foto & Misure AR</div>
+        <div class="card-title">📸 Foto &amp; Misure AR</div>
         <div id="photo-preview-area" class="photo-preview" style="margin-bottom:12px;">
           <div class="photo-placeholder"><span class="icon">📷</span>Nessuna foto ancora</div>
         </div>
@@ -174,7 +179,7 @@ textarea { resize: vertical; min-height: 80px; }
             <div class="misura-box"><div class="lbl">LARGH.</div><div class="val" id="val-w">—</div><div class="unt">mm</div></div>
             <div class="misura-box"><div class="lbl">ALTEZZA</div><div class="val" id="val-h">—</div><div class="unt">mm</div></div>
           </div>
-          <p style="font-size:12px;color:var(--gray);text-align:center;">Stima AR ±5mm — modifica sotto se necessario</p>
+          <p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:4px;">Stima AR ±5mm — correggi se necessario</p>
         </div>
         <div style="margin-top:12px;">
           <label style="font-size:12px;color:var(--gray);margin-bottom:8px;">Inserisci o correggi manualmente (mm):</label>
@@ -196,7 +201,7 @@ textarea { resize: vertical; min-height: 80px; }
     <div id="form-step3" style="display:none;">
       <div class="card">
         <div class="card-title">📝 Note</div>
-        <textarea id="note" placeholder="Es. Pezzo usurato, mancante staffa, codice alternativo WIR-xxx..."></textarea>
+        <textarea id="note" placeholder="Es. Pezzo usurato, mancante staffa, codice alternativo..."></textarea>
       </div>
       <div class="card">
         <div class="card-title">✅ Riepilogo</div>
@@ -236,7 +241,7 @@ textarea { resize: vertical; min-height: 80px; }
       <div class="card-title">🗑️ Dati</div>
       <button class="btn btn-red" onclick="clearAll()">Cancella tutti i dati</button>
     </div>
-    <div style="text-align:center;padding:20px;color:var(--gray);font-size:12px;">MisuraRicambi v1.0 — Ghibli &amp; Wirbel</div>
+    <div style="text-align:center;padding:20px;color:var(--gray);font-size:12px;">MisuraRicambi v1.1 — Ghibli &amp; Wirbel</div>
   </div>
 </div>
 
@@ -253,24 +258,30 @@ textarea { resize: vertical; min-height: 80px; }
 <div id="camera-container">
   <video id="video" autoplay playsinline muted></video>
   <canvas id="canvas-ar"></canvas>
+
+  <!-- Scan guide frame -->
+  <div class="scan-guide">
+    <div class="scan-guide-inner">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+    </div>
+  </div>
+
   <div class="cam-top-bar">
     <div class="cam-code-badge" id="cam-code-label">—</div>
   </div>
-  <div class="scan-frame" id="scan-frame">
-    <div class="sc tl"></div><div class="sc tr"></div>
-    <div class="sc bl"></div><div class="sc br"></div>
-    <div class="scan-line"></div>
+
+  <!-- AR status indicator -->
+  <div class="ar-status" id="ar-status">
+    <div class="ar-dot searching" id="ar-dot-card"></div>
+    <div class="ar-status-text" id="ar-status-text">Cerco la carta...</div>
   </div>
-  <div class="ar-result-overlay" id="ar-result-overlay">
-    <div style="font-size:12px;opacity:0.7;margin-bottom:4px;">Dimensioni rilevate</div>
-    <div class="ar-dims" id="ar-dims-text">— × — × —</div>
-    <div style="font-size:11px;opacity:0.6;margin-top:4px;">Scatta per confermare</div>
-  </div>
+
   <div class="cam-ui">
-    <div class="cam-instructions" id="cam-instructions">📐 Posiziona pezzo + riferimento nel frame</div>
+    <div class="cam-instructions" id="cam-instructions">💳 Posiziona il pezzo con la carta accanto su sfondo chiaro</div>
     <div class="cam-btn-row">
       <button class="cam-close" onclick="closeCamera()">✕ Annulla</button>
-      <button class="cam-snap" onclick="snapPhoto()"></button>
+      <button class="cam-snap" id="cam-snap-btn" onclick="snapPhoto()" title="Scatta"></button>
       <button class="cam-close" onclick="manualMeasure()">✏️ Manuale</button>
     </div>
   </div>
@@ -281,9 +292,12 @@ let ricambi = JSON.parse(localStorage.getItem('ricambi_ghibli') || '[]');
 let currentPhoto = null;
 let currentMisure = { l: null, w: null, h: null };
 let videoStream = null;
-let selectedRef = { name: 'A4', w: 210, h: 297 };
-let arTimer = null;
+let arLoopId = null;
+let arState = { cardFound: false, partFound: false };
+// Card reference: 85.6 x 54 mm, aspect ratio ~1.585
+const CARD_W_MM = 85.6, CARD_H_MM = 54.0, CARD_RATIO = 85.6 / 54.0;
 
+// ── NAVIGATION ──────────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -299,159 +313,262 @@ function setStep(n) {
     el.className = 'step ' + (i < n ? 'done' : i === n ? 'active' : 'pending');
   }
 }
-
 function goStep2() {
-  const cod = document.getElementById('codice').value.trim();
-  if (!cod) { showToast('⚠️ Inserisci il codice ricambio'); return; }
+  if (!document.getElementById('codice').value.trim()) { showToast('⚠️ Inserisci il codice ricambio'); return; }
   document.getElementById('form-step1').style.display = 'none';
   document.getElementById('form-step2').style.display = 'block';
-  document.getElementById('cam-code-label').textContent = cod.toUpperCase();
+  document.getElementById('cam-code-label').textContent = document.getElementById('codice').value.trim().toUpperCase();
   setStep(2);
 }
-function goStep1() {
-  document.getElementById('form-step1').style.display = 'block';
-  document.getElementById('form-step2').style.display = 'none';
-  setStep(1);
-}
+function goStep1() { document.getElementById('form-step1').style.display='block'; document.getElementById('form-step2').style.display='none'; setStep(1); }
 function goStep3() {
-  const l = getMisura('l'), w = getMisura('w');
-  if (!l || !w) { showToast('⚠️ Inserisci almeno lunghezza e larghezza'); return; }
-  document.getElementById('form-step2').style.display = 'none';
-  document.getElementById('form-step3').style.display = 'block';
-  setStep(3);
-  renderRiepilogo();
+  if (!getMisura('l') || !getMisura('w')) { showToast('⚠️ Inserisci almeno lunghezza e larghezza'); return; }
+  document.getElementById('form-step2').style.display='none'; document.getElementById('form-step3').style.display='block'; setStep(3); renderRiepilogo();
 }
-function goStep2b() {
-  document.getElementById('form-step3').style.display = 'none';
-  document.getElementById('form-step2').style.display = 'block';
-  setStep(2);
-}
+function goStep2b() { document.getElementById('form-step3').style.display='none'; document.getElementById('form-step2').style.display='block'; setStep(2); }
+function getMisura(dim) { return parseFloat(document.getElementById('man-'+dim).value) || currentMisure[dim]; }
 
-function getMisura(dim) {
-  const man = parseFloat(document.getElementById('man-' + dim).value);
-  return man || currentMisure[dim];
-}
-
-function selectRef(el, name, w, h) {
-  document.querySelectorAll('.ref-opt').forEach(r => r.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedRef = { name, w, h };
-}
-
+// ── CAMERA ──────────────────────────────────────────────
 function openCamera() {
   document.getElementById('camera-container').classList.add('open');
-  document.getElementById('ar-result-overlay').classList.remove('show');
-  document.getElementById('cam-instructions').textContent = '📐 Posiziona pezzo + riferimento nel frame';
+  setARStatus('searching', 'Cerco la carta di credito...');
+  document.getElementById('cam-instructions').textContent = '💳 Posiziona il pezzo con la carta su sfondo chiaro';
+  arState = { cardFound: false, partFound: false };
 
   navigator.mediaDevices.getUserMedia({
-    video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+    video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } }
   }).then(stream => {
     videoStream = stream;
-    document.getElementById('video').srcObject = stream;
-    arTimer = setTimeout(doARAnalysis, 2000);
-  }).catch(() => {
-    showToast('⚠️ Fotocamera non disponibile');
+    const video = document.getElementById('video');
+    video.srcObject = stream;
+    video.onloadedmetadata = () => { startARLoop(); };
+  }).catch(err => {
+    showToast('⚠️ Fotocamera non disponibile: ' + err.message);
     closeCamera();
   });
 }
 
 function closeCamera() {
-  if (arTimer) clearTimeout(arTimer);
+  if (arLoopId) { clearInterval(arLoopId); arLoopId = null; }
   if (videoStream) { videoStream.getTracks().forEach(t => t.stop()); videoStream = null; }
   document.getElementById('camera-container').classList.remove('open');
+  // Clear canvas
+  const c = document.getElementById('canvas-ar');
+  c.getContext('2d').clearRect(0, 0, c.width, c.height);
 }
 
-function doARAnalysis() {
-  const video = document.getElementById('video');
-  const canvas = document.getElementById('canvas-ar');
-  canvas.width = video.videoWidth || 1280;
-  canvas.height = video.videoHeight || 720;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0);
+function setARStatus(state, text) {
+  const dot = document.getElementById('ar-dot-card');
+  const txt = document.getElementById('ar-status-text');
+  dot.className = 'ar-dot ' + state;
+  txt.textContent = text;
+}
 
-  const W = canvas.width, H = canvas.height;
+// ── AR ANALYSIS LOOP ────────────────────────────────────
+function startARLoop() {
+  if (arLoopId) clearInterval(arLoopId);
+  arLoopId = setInterval(analyzeFrame, 600);
+}
+
+function analyzeFrame() {
+  const video = document.getElementById('video');
+  if (!video.videoWidth) return;
+
+  // Work on downscaled canvas for performance
+  const SCALE = 0.25;
+  const W = Math.floor(video.videoWidth * SCALE);
+  const H = Math.floor(video.videoHeight * SCALE);
+
+  const offscreen = document.createElement('canvas');
+  offscreen.width = W; offscreen.height = H;
+  const ctx = offscreen.getContext('2d');
+  ctx.drawImage(video, 0, 0, W, H);
+
   const imgData = ctx.getImageData(0, 0, W, H);
   const d = imgData.data;
 
-  // Simple luminance edge detection to find bounding boxes
-  const edges = new Uint8Array(W * H);
-  for (let y = 1; y < H - 1; y++) {
-    for (let x = 1; x < W - 1; x++) {
-      const i = (y * W + x) * 4;
-      const lum = (d[i] + d[i+1] + d[i+2]) / 3;
-      const right = (d[i+4] + d[i+5] + d[i+6]) / 3;
-      const down = (d[((y+1)*W+x)*4] + d[((y+1)*W+x)*4+1] + d[((y+1)*W+x)*4+2]) / 3;
-      if (Math.abs(lum - right) + Math.abs(lum - down) > 25) edges[y * W + x] = 1;
-    }
+  // ── Step 1: build grayscale + detect dark objects on light background ──
+  const gray = new Float32Array(W * H);
+  for (let i = 0; i < W * H; i++) {
+    gray[i] = (d[i*4]*0.299 + d[i*4+1]*0.587 + d[i*4+2]*0.114);
   }
 
-  // Find largest contour in center region (the part)
-  const cx = W * 0.5, cy = H * 0.5;
-  let pMinX = W, pMaxX = 0, pMinY = H, pMaxY = 0;
-  // Find reference contour in upper-left corner region
-  let rMinX = W, rMaxX = 0, rMinY = H, rMaxY = 0;
+  // Estimate background luminance (median of border pixels)
+  let borderLums = [];
+  for (let x = 0; x < W; x++) { borderLums.push(gray[x]); borderLums.push(gray[(H-1)*W+x]); }
+  for (let y = 0; y < H; y++) { borderLums.push(gray[y*W]); borderLums.push(gray[y*W+W-1]); }
+  borderLums.sort((a,b)=>a-b);
+  const bgLum = borderLums[Math.floor(borderLums.length*0.6)]; // 60th percentile = background estimate
 
-  for (let y = 0; y < H; y++) {
-    for (let x = 0; x < W; x++) {
-      if (!edges[y * W + x]) continue;
-      const dc = Math.hypot(x - cx, y - cy);
-      if (dc < Math.min(W, H) * 0.38) {
-        pMinX = Math.min(pMinX, x); pMaxX = Math.max(pMaxX, x);
-        pMinY = Math.min(pMinY, y); pMaxY = Math.max(pMaxY, y);
-      } else if (x < W * 0.28 && y < H * 0.35) {
-        rMinX = Math.min(rMinX, x); rMaxX = Math.max(rMaxX, x);
-        rMinY = Math.min(rMinY, y); rMaxY = Math.max(rMaxY, y);
+  // Threshold: pixels significantly darker than background are "foreground"
+  const threshold = bgLum - 35;
+
+  // ── Step 2: Connected component labeling (simple flood-fill via union-find) ──
+  // Mark foreground
+  const fg = new Uint8Array(W * H);
+  for (let i = 0; i < W * H; i++) fg[i] = gray[i] < threshold ? 1 : 0;
+
+  // Find bounding boxes of connected regions using row-sweep
+  const visited = new Uint8Array(W * H);
+  const regions = [];
+
+  for (let sy = 1; sy < H-1; sy++) {
+    for (let sx = 1; sx < W-1; sx++) {
+      const idx = sy*W+sx;
+      if (!fg[idx] || visited[idx]) continue;
+      // BFS
+      const queue = [idx];
+      visited[idx] = 1;
+      let minX=sx,maxX=sx,minY=sy,maxY=sy, size=0;
+      while (queue.length) {
+        const cur = queue.pop();
+        const cx = cur % W, cy = Math.floor(cur/W);
+        if (cx < minX) minX=cx; if (cx > maxX) maxX=cx;
+        if (cy < minY) minY=cy; if (cy > maxY) maxY=cy;
+        size++;
+        const neighbors = [cur-1,cur+1,cur-W,cur+W];
+        for (const nb of neighbors) {
+          if (nb>=0 && nb<W*H && fg[nb] && !visited[nb]) { visited[nb]=1; queue.push(nb); }
+        }
       }
+      if (size > 40) regions.push({ minX, maxX, minY, maxY, size, w: maxX-minX, h: maxY-minY });
     }
   }
 
-  const refPxW = rMaxX - rMinX, refPxH = rMaxY - rMinY;
-  let scale;
-  if (refPxW > 50 && refPxH > 30) {
-    scale = (selectedRef.w / refPxW + selectedRef.h / refPxH) / 2;
-  } else {
-    // Fallback: ~0.32mm per pixel at typical phone distance
-    scale = 0.32;
+  if (regions.length === 0) {
+    setARStatus('searching', 'Nessun oggetto rilevato...');
+    document.getElementById('cam-instructions').textContent = '⚠️ Avvicina la camera, sfondo troppo uniforme?';
+    return;
   }
 
-  const objPxW = pMaxX - pMinX;
-  const objPxH = pMaxY - pMinY;
+  // ── Step 3: Find the credit card region ──
+  // Card signature: aspect ratio close to 1.585, relatively small, rectangular
+  let cardRegion = null;
+  let bestCardScore = Infinity;
 
-  let mL, mW, mH;
-  if (objPxW > 30 && objPxH > 30) {
-    mL = Math.round(Math.max(objPxW, objPxH) * scale / 5) * 5;
-    mW = Math.round(Math.min(objPxW, objPxH) * scale / 5) * 5;
-  } else {
-    mL = Math.round((100 + Math.random() * 200) / 5) * 5;
-    mW = Math.round((50 + Math.random() * mL * 0.5) / 5) * 5;
+  for (const r of regions) {
+    if (r.w < 8 || r.h < 8) continue;
+    const ratio = r.w / r.h;
+    // Accept both landscape and portrait card
+    const ratioDiff = Math.min(Math.abs(ratio - CARD_RATIO), Math.abs(ratio - 1/CARD_RATIO));
+    const fillRatio = r.size / (r.w * r.h); // how "solid/filled" the region is
+    // Card should be relatively solid and have correct aspect ratio
+    if (ratioDiff < 0.35 && fillRatio > 0.45) {
+      const score = ratioDiff;
+      if (score < bestCardScore) { bestCardScore = score; cardRegion = r; }
+    }
   }
-  mH = Math.round((20 + Math.random() * 80) / 5) * 5;
-  mL = Math.max(10, Math.min(600, mL));
-  mW = Math.max(10, Math.min(mL, mW));
-  mH = Math.max(5, Math.min(300, mH));
 
-  currentMisure = { l: mL, w: mW, h: mH };
+  // ── Step 4: Find the part (largest region that is NOT the card) ──
+  let partRegion = null;
+  let maxPartSize = 0;
+  for (const r of regions) {
+    if (r === cardRegion) continue;
+    if (r.w < 15 || r.h < 15) continue;
+    if (r.size > maxPartSize) { maxPartSize = r.size; partRegion = r; }
+  }
 
-  // Draw overlay
-  ctx.strokeStyle = '#00ff88';
-  ctx.lineWidth = 3;
-  ctx.setLineDash([8, 4]);
-  const bx = pMinX > 100 ? pMinX : W*0.2, by = pMinY > 50 ? pMinY : H*0.2;
-  const bw = objPxW > 30 ? objPxW + 10 : W*0.6, bh = objPxH > 30 ? objPxH + 10 : H*0.6;
-  ctx.strokeRect(bx - 5, by - 5, bw, bh);
-  ctx.setLineDash([]);
-  ctx.fillStyle = '#00ff88';
-  ctx.font = 'bold 18px -apple-system, sans-serif';
-  ctx.fillText(mL + 'mm', bx + bw/2 - 25, by - 10);
-  ctx.fillText(mW + 'mm', bx + bw + 6, by + bh/2);
-  [[bx, by],[bx+bw, by],[bx, by+bh],[bx+bw, by+bh]].forEach(([px,py]) => {
-    ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI*2);
-    ctx.fillStyle = '#00ff88'; ctx.fill();
-  });
+  // ── Step 5: Compute scale and measurements ──
+  let scaleX = null, scaleY = null;
+  if (cardRegion) {
+    const cardPxW = cardRegion.w, cardPxH = cardRegion.h;
+    // Determine card orientation
+    if (cardPxW >= cardPxH) {
+      scaleX = CARD_W_MM / cardPxW;
+      scaleY = CARD_H_MM / cardPxH;
+    } else {
+      scaleX = CARD_H_MM / cardPxW;
+      scaleY = CARD_W_MM / cardPxH;
+    }
+    arState.cardFound = true;
+    setARStatus('found', 'Carta trovata ✓ — Cerco il pezzo...');
+  } else {
+    arState.cardFound = false;
+    setARStatus('searching', 'Carta non trovata — avvicinala');
+    document.getElementById('cam-instructions').textContent = '💳 Non riesco a vedere la carta — riposizionala';
+  }
 
-  document.getElementById('ar-dims-text').textContent = mL + ' × ' + mW + ' × ' + mH + ' mm';
-  document.getElementById('ar-result-overlay').classList.add('show');
-  document.getElementById('cam-instructions').textContent = '✅ Rilevate — Scatta per confermare';
+  // Scale factor: average of x/y, converted back from downscaled space
+  const scale = scaleX ? (scaleX + scaleY) / 2 : null;
+
+  // ── Step 6: Draw overlay on full-res canvas ──
+  const arCanvas = document.getElementById('canvas-ar');
+  arCanvas.width = video.videoWidth;
+  arCanvas.height = video.videoHeight;
+  const actx = arCanvas.getContext('2d');
+  actx.clearRect(0, 0, arCanvas.width, arCanvas.height);
+  const upscale = 1 / SCALE;
+
+  // Draw card box (blue)
+  if (cardRegion) {
+    const cx = cardRegion.minX * upscale, cy = cardRegion.minY * upscale;
+    const cw = cardRegion.w * upscale, ch = cardRegion.h * upscale;
+    actx.strokeStyle = '#60a5fa';
+    actx.lineWidth = 2;
+    actx.setLineDash([6, 3]);
+    actx.strokeRect(cx, cy, cw, ch);
+    actx.setLineDash([]);
+    actx.fillStyle = 'rgba(96,165,250,0.15)';
+    actx.fillRect(cx, cy, cw, ch);
+    actx.fillStyle = '#60a5fa';
+    actx.font = 'bold 14px -apple-system, sans-serif';
+    actx.fillText('💳 Riferimento', cx + 4, cy - 6);
+  }
+
+  // Draw part box (green) + measurements
+  let mL = null, mW = null, mH = null;
+  if (partRegion) {
+    const px = partRegion.minX * upscale, py = partRegion.minY * upscale;
+    const pw = partRegion.w * upscale, ph = partRegion.h * upscale;
+
+    if (scale) {
+      // Measurements: L = longer side, W = shorter side
+      const rawL = Math.max(partRegion.w, partRegion.h) * scale;
+      const rawW = Math.min(partRegion.w, partRegion.h) * scale;
+      mL = Math.round(rawL / 5) * 5;
+      mW = Math.round(rawW / 5) * 5;
+      // Height estimation: use 30% of longer dimension (conservative for flat parts)
+      mH = Math.round((rawL * 0.25) / 5) * 5;
+      mL = Math.max(5, Math.min(800, mL));
+      mW = Math.max(5, Math.min(mL, mW));
+      mH = Math.max(5, Math.min(400, mH));
+
+      // Draw bounding box
+      actx.strokeStyle = '#00ff88';
+      actx.lineWidth = 3;
+      actx.strokeRect(px - 4, py - 4, pw + 8, ph + 8);
+      // Corner dots
+      [[px-4,py-4],[px+pw+4,py-4],[px-4,py+ph+4],[px+pw+4,py+ph+4]].forEach(([cx,cy]) => {
+        actx.beginPath(); actx.arc(cx,cy,6,0,Math.PI*2);
+        actx.fillStyle='#00ff88'; actx.fill();
+      });
+      // Dimension lines
+      actx.strokeStyle = '#00ff88'; actx.lineWidth = 1.5;
+      // Width arrow (top)
+      actx.beginPath(); actx.moveTo(px-4, py-20); actx.lineTo(px+pw+4, py-20); actx.stroke();
+      actx.beginPath(); actx.moveTo(px-4,py-25); actx.lineTo(px-4,py-15); actx.stroke();
+      actx.beginPath(); actx.moveTo(px+pw+4,py-25); actx.lineTo(px+pw+4,py-15); actx.stroke();
+      actx.fillStyle='#00ff88';
+      actx.font = 'bold 16px -apple-system, sans-serif';
+      actx.textAlign='center';
+      actx.fillText(mL+'mm', px + pw/2, py - 24);
+      actx.textAlign='left';
+      // Height arrow (right)
+      actx.beginPath(); actx.moveTo(px+pw+18, py-4); actx.lineTo(px+pw+18, py+ph+4); actx.stroke();
+      actx.fillText(mW+'mm', px+pw+22, py+ph/2+6);
+
+      currentMisure = { l: mL, w: mW, h: mH };
+      arState.partFound = true;
+      setARStatus('found', 'Pezzo rilevato ✓  ' + mL + '×' + mW + '×' + mH + 'mm');
+      document.getElementById('cam-instructions').textContent = '✅ Pronto — Scatta per confermare';
+    }
+  } else {
+    arState.partFound = false;
+    if (arState.cardFound) {
+      setARStatus('searching', 'Carta trovata ✓ — pezzo non visto');
+      document.getElementById('cam-instructions').textContent = '🔍 Carta trovata! Assicurati che il pezzo sia visibile';
+    }
+  }
 }
 
 function snapPhoto() {
@@ -461,10 +578,11 @@ function snapPhoto() {
   snap.height = video.videoHeight || 720;
   const ctx = snap.getContext('2d');
   ctx.drawImage(video, 0, 0);
-  // Also draw the canvas-ar overlay onto photo
+  // Overlay the AR canvas on top
   const arCanvas = document.getElementById('canvas-ar');
   if (arCanvas.width > 0) ctx.drawImage(arCanvas, 0, 0, snap.width, snap.height);
-  currentPhoto = snap.toDataURL('image/jpeg', 0.8);
+
+  currentPhoto = snap.toDataURL('image/jpeg', 0.82);
   closeCamera();
 
   document.getElementById('photo-preview-area').innerHTML = '<img src="' + currentPhoto + '" alt="Foto ricambio">';
@@ -476,132 +594,108 @@ function snapPhoto() {
     document.getElementById('man-l').value = currentMisure.l;
     document.getElementById('man-w').value = currentMisure.w;
     document.getElementById('man-h').value = currentMisure.h;
+    showToast('📸 Misure salvate: ' + currentMisure.l + '×' + currentMisure.w + '×' + currentMisure.h + ' mm');
+  } else {
+    showToast('📸 Foto scattata — inserisci le misure');
   }
-  showToast('📸 Foto scattata e misure rilevate!');
 }
 
-function manualMeasure() { closeCamera(); showToast('✏️ Inserisci misure manualmente'); }
+function manualMeasure() { closeCamera(); showToast('✏️ Inserisci le misure manualmente'); }
 
+// ── BARCODE SCAN ──────────────────────────────────────
 function scanBarcode() {
   if ('BarcodeDetector' in window) {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(stream => {
-      const v = document.createElement('video');
-      v.srcObject = stream; v.play();
+      const v = document.createElement('video'); v.srcObject = stream; v.play();
       const det = new BarcodeDetector({ formats: ['code_128','code_39','ean_13','qr_code'] });
-      const interval = setInterval(() => {
+      const iv = setInterval(() => {
         det.detect(v).then(codes => {
-          if (codes.length > 0) {
-            clearInterval(interval); stream.getTracks().forEach(t => t.stop());
-            document.getElementById('codice').value = codes[0].rawValue.toUpperCase();
-            showToast('✅ Codice scansionato!');
-          }
-        }).catch(() => {});
+          if (codes.length > 0) { clearInterval(iv); stream.getTracks().forEach(t=>t.stop()); document.getElementById('codice').value = codes[0].rawValue.toUpperCase(); showToast('✅ Codice scansionato!'); }
+        }).catch(()=>{});
       }, 300);
-      setTimeout(() => { clearInterval(interval); stream.getTracks().forEach(t => t.stop()); }, 8000);
-    }).catch(() => showToast('⚠️ Fotocamera non disponibile'));
+      setTimeout(()=>{ clearInterval(iv); stream.getTracks().forEach(t=>t.stop()); }, 8000);
+    }).catch(()=>showToast('⚠️ Fotocamera non disponibile'));
   } else {
     showToast('Inserisci il codice manualmente'); document.getElementById('codice').focus();
   }
 }
 
+// ── SAVE ─────────────────────────────────────────────
 function renderRiepilogo() {
   const cod = document.getElementById('codice').value.trim().toUpperCase();
   const cat = document.getElementById('categoria').value || '—';
-  const l = getMisura('l'), w = getMisura('w'), h = getMisura('h');
+  const l=getMisura('l'), w=getMisura('w'), h=getMisura('h');
   document.getElementById('riepilogo-content').innerHTML =
     '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">' +
-    '<div style="flex:1;">' +
-    '<div style="font-size:20px;font-weight:800;margin-bottom:4px;">' + cod + '</div>' +
+    '<div style="flex:1;"><div style="font-size:20px;font-weight:800;margin-bottom:4px;">' + cod + '</div>' +
     '<div style="font-size:13px;color:var(--gray);margin-bottom:12px;">' + cat + '</div>' +
     '<div class="misure-display" style="margin:0;">' +
     '<div class="misura-box"><div class="lbl">L</div><div class="val">' + (l||'?') + '</div><div class="unt">mm</div></div>' +
     '<div class="misura-box"><div class="lbl">W</div><div class="val">' + (w||'?') + '</div><div class="unt">mm</div></div>' +
     '<div class="misura-box"><div class="lbl">H</div><div class="val">' + (h||'?') + '</div><div class="unt">mm</div></div>' +
-    '</div></div>' +
-    (currentPhoto ? '<img src="' + currentPhoto + '" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0;">' : '') +
-    '</div>';
+    '</div></div>' + (currentPhoto ? '<img src="' + currentPhoto + '" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0;">' : '') + '</div>';
 }
 
 function salvaRicambio() {
   const cod = document.getElementById('codice').value.trim().toUpperCase();
   const op = document.getElementById('setting-operator').value.trim() || 'Operatore';
-  const r = {
-    id: Date.now(),
-    codice: cod,
-    categoria: document.getElementById('categoria').value || 'Non specificata',
-    descrizione: document.getElementById('descrizione').value.trim(),
-    lunghezza: getMisura('l'),
-    larghezza: getMisura('w'),
-    altezza: getMisura('h'),
-    note: document.getElementById('note').value.trim(),
-    operatore: op,
-    data: new Date().toLocaleDateString('it-IT'),
-    ora: new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
-    foto: currentPhoto
-  };
+  const r = { id: Date.now(), codice: cod, categoria: document.getElementById('categoria').value||'Non specificata',
+    descrizione: document.getElementById('descrizione').value.trim(), lunghezza: getMisura('l'), larghezza: getMisura('w'),
+    altezza: getMisura('h'), note: document.getElementById('note').value.trim(), operatore: op,
+    data: new Date().toLocaleDateString('it-IT'), ora: new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}), foto: currentPhoto };
   ricambi.unshift(r);
   localStorage.setItem('ricambi_ghibli', JSON.stringify(ricambi));
-  updateBadge();
-  showToast('✅ Ricambio salvato!');
-  resetForm();
+  updateBadge(); showToast('✅ Ricambio salvato!'); resetForm();
   setTimeout(() => showPage('lista'), 700);
 }
 
 function resetForm() {
-  ['codice','descrizione','note','man-l','man-w','man-h'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('categoria').value = '';
-  currentPhoto = null; currentMisure = { l: null, w: null, h: null };
-  document.getElementById('form-step1').style.display = 'block';
-  document.getElementById('form-step2').style.display = 'none';
-  document.getElementById('form-step3').style.display = 'none';
-  document.getElementById('photo-preview-area').innerHTML = '<div class="photo-placeholder"><span class="icon">📷</span>Nessuna foto ancora</div>';
-  document.getElementById('misure-result').style.display = 'none';
+  ['codice','descrizione','note','man-l','man-w','man-h'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('categoria').value='';
+  currentPhoto=null; currentMisure={l:null,w:null,h:null};
+  document.getElementById('form-step1').style.display='block';
+  document.getElementById('form-step2').style.display='none';
+  document.getElementById('form-step3').style.display='none';
+  document.getElementById('photo-preview-area').innerHTML='<div class="photo-placeholder"><span class="icon">📷</span>Nessuna foto ancora</div>';
+  document.getElementById('misure-result').style.display='none';
   setStep(1);
 }
 
+// ── LIST ─────────────────────────────────────────────
 function renderList(filter) {
-  filter = filter || '';
+  filter = filter||'';
   const container = document.getElementById('lista-container');
-  const filtered = ricambi.filter(r =>
-    !filter || r.codice.includes(filter.toUpperCase()) ||
+  const filtered = ricambi.filter(r => !filter || r.codice.includes(filter.toUpperCase()) ||
     r.categoria.toLowerCase().includes(filter.toLowerCase()) ||
-    (r.descrizione && r.descrizione.toLowerCase().includes(filter.toLowerCase()))
-  );
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="empty"><div class="icon">📦</div><p>' +
-      (ricambi.length === 0 ? 'Nessun ricambio ancora.<br>Aggiungi il primo dalla sezione +' : 'Nessun risultato') + '</p></div>';
+    (r.descrizione && r.descrizione.toLowerCase().includes(filter.toLowerCase())));
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty"><div class="icon">📦</div><p>' + (ricambi.length===0 ? 'Nessun ricambio ancora.<br>Aggiungi il primo dalla sezione +' : 'Nessun risultato') + '</p></div>';
     return;
   }
   container.innerHTML = filtered.map(r =>
-    '<div class="ricambio-item">' +
-    '<div class="ricambio-header"><div>' +
+    '<div class="ricambio-item"><div class="ricambio-header"><div>' +
     '<div class="ricambio-code">' + r.codice + '</div>' +
     '<div class="ricambio-date">📅 ' + r.data + ' ' + r.ora + ' · ' + r.operatore + '</div>' +
     '</div>' + (r.foto ? '<img src="' + r.foto + '" class="ricambio-thumb">' : '') + '</div>' +
-    '<div class="ricambio-misure">' +
-    '<span class="tag">📐 ' + r.lunghezza + '×' + r.larghezza + '×' + r.altezza + ' mm</span>' +
+    '<div class="ricambio-misure"><span class="tag">📐 ' + r.lunghezza + '×' + r.larghezza + '×' + r.altezza + ' mm</span>' +
     '<span class="tag green">' + r.categoria + '</span></div>' +
     (r.descrizione ? '<div class="ricambio-note">📦 ' + r.descrizione + '</div>' : '') +
     (r.note ? '<div class="ricambio-note">📝 ' + r.note + '</div>' : '') +
-    '<div style="text-align:right;margin-top:10px;">' +
-    '<button class="btn btn-gray btn-sm" style="color:var(--red);" onclick="eliminaRicambio(' + r.id + ')">🗑️ Elimina</button></div>' +
-    '</div>'
+    '<div style="text-align:right;margin-top:10px;"><button class="btn btn-gray btn-sm" style="color:var(--red);" onclick="eliminaRicambio(' + r.id + ')">🗑️ Elimina</button></div></div>'
   ).join('');
 }
 
 function filterList() { renderList(document.getElementById('search').value); }
-
 function eliminaRicambio(id) {
-  if (!confirm('Eliminare questo ricambio?')) return;
+  if (!confirm('Eliminare?')) return;
   ricambi = ricambi.filter(r => r.id !== id);
   localStorage.setItem('ricambi_ghibli', JSON.stringify(ricambi));
-  updateBadge();
-  renderList(document.getElementById('search').value);
-  showToast('🗑️ Eliminato');
+  updateBadge(); renderList(document.getElementById('search').value); showToast('🗑️ Eliminato');
 }
 
+// ── EXCEL ─────────────────────────────────────────────
 function esportaExcel() {
-  if (ricambi.length === 0) { showToast('⚠️ Nessun dato da esportare'); return; }
+  if (!ricambi.length) { showToast('⚠️ Nessun dato da esportare'); return; }
   const rows = [['Codice','Categoria','Descrizione','Lunghezza (mm)','Larghezza (mm)','Altezza (mm)','Note','Operatore','Data','Ora']];
   ricambi.forEach(r => rows.push([r.codice,r.categoria,r.descrizione||'',r.lunghezza||'',r.larghezza||'',r.altezza||'',r.note||'',r.operatore,r.data,r.ora]));
   const wb = XLSX.utils.book_new();
@@ -609,36 +703,31 @@ function esportaExcel() {
   ws['!cols'] = [{wch:18},{wch:22},{wch:30},{wch:16},{wch:16},{wch:16},{wch:30},{wch:16},{wch:12},{wch:8}];
   XLSX.utils.book_append_sheet(wb, ws, 'Ricambi');
   const wh = document.getElementById('setting-warehouse').value || 'Magazzino';
-  const date = new Date().toLocaleDateString('it-IT').replace(/\//g,'-');
-  XLSX.writeFile(wb, wh + '_Ricambi_' + date + '.xlsx');
+  XLSX.writeFile(wb, wh + '_Ricambi_' + new Date().toLocaleDateString('it-IT').replace(/\//g,'-') + '.xlsx');
   showToast('📊 Excel scaricato!');
 }
 
+// ── STATS / SETTINGS ──────────────────────────────────
 function renderStats() {
   const cats = {};
-  ricambi.forEach(r => { cats[r.categoria] = (cats[r.categoria]||0) + 1; });
-  const top = Object.entries(cats).sort((a,b) => b[1]-a[1])[0];
+  ricambi.forEach(r => { cats[r.categoria]=(cats[r.categoria]||0)+1; });
+  const top = Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];
   document.getElementById('stats-content').innerHTML =
     '<div>📦 Totale ricambi: <strong>' + ricambi.length + '</strong></div>' +
-    '<div>📅 Ultima entrata: <strong>' + (ricambi.length ? ricambi[0].data + ' ' + ricambi[0].ora : '—') + '</strong></div>' +
-    '<div>🏆 Categoria top: <strong>' + (top ? top[0] + ' (' + top[1] + ')' : '—') + '</strong></div>' +
-    '<div>📸 Con foto: <strong>' + ricambi.filter(r => r.foto).length + '</strong></div>';
+    '<div>📅 Ultima entrata: <strong>' + (ricambi.length ? ricambi[0].data+' '+ricambi[0].ora : '—') + '</strong></div>' +
+    '<div>🏆 Categoria top: <strong>' + (top ? top[0]+' ('+top[1]+')' : '—') + '</strong></div>' +
+    '<div>📸 Con foto: <strong>' + ricambi.filter(r=>r.foto).length + '</strong></div>';
 }
-
 function clearAll() {
   if (!confirm('Cancellare TUTTI i dati?')) return;
-  ricambi = []; localStorage.removeItem('ricambi_ghibli');
-  updateBadge(); showToast('🗑️ Dati cancellati');
+  ricambi=[]; localStorage.removeItem('ricambi_ghibli'); updateBadge(); showToast('🗑️ Dati cancellati');
 }
-
 function updateBadge() { document.getElementById('headerCount').textContent = ricambi.length + ' pezzi'; }
-
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
 }
-
 updateBadge();
 </script>
 </body>
