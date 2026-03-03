@@ -38,80 +38,94 @@ textarea { resize: vertical; min-height: 80px; }
 .btn-gray { background: #f3f4f6; color: #374151; border: 1px solid var(--border); }
 .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 8px; width: auto; }
 .btn-row { display: flex; gap: 10px; margin-top: 8px; }
-#camera-container { position: fixed; inset: 0; background: black; z-index: 200; display: none; flex-direction: column; }
+
+/* ── CAMERA ── */
+#camera-container { position: fixed; inset: 0; background: black; z-index: 200; display: none; flex-direction: column; touch-action: none; }
 #camera-container.open { display: flex; }
 #video { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-#canvas-ar { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.cam-ui { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); display: flex; flex-direction: column; align-items: center; gap: 14px; }
-.cam-instructions { color: white; font-size: 14px; text-align: center; background: rgba(0,0,0,0.5); padding: 10px 18px; border-radius: 20px; max-width: 320px; line-height: 1.4; }
-.cam-btn-row { display: flex; gap: 16px; align-items: center; }
-.cam-snap { width: 72px; height: 72px; border-radius: 50%; background: white; border: 5px solid rgba(255,255,255,0.4); cursor: pointer; flex-shrink: 0; }
-.cam-snap:active { transform: scale(0.93); }
-.cam-close { background: rgba(255,255,255,0.18); border: none; color: white; padding: 12px 20px; border-radius: 20px; font-size: 14px; cursor: pointer; }
-.cam-top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(rgba(0,0,0,0.5), transparent); display: flex; align-items: center; gap: 12px; }
+#canvas-measure { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* top bar */
+.cam-top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 14px 16px; background: linear-gradient(rgba(0,0,0,0.65), transparent); display: flex; align-items: center; justify-content: space-between; gap: 10px; pointer-events: none; }
 .cam-code-badge { background: rgba(26,86,219,0.9); color: white; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; }
-.steps { display: flex; align-items: center; margin-bottom: 20px; }
-.step { display: flex; align-items: center; gap: 6px; flex: 1; }
-.step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; transition: all 0.2s; }
-.step.done .step-dot { background: var(--green); color: white; }
-.step.active .step-dot { background: var(--blue); color: white; }
-.step.pending .step-dot { background: var(--border); color: var(--gray); }
-.step-line { flex: 1; height: 2px; background: var(--border); margin: 0 4px; }
+
+/* step pill */
+.measure-pill {
+  position: absolute; top: 70px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.7); border-radius: 24px; padding: 10px 20px;
+  display: flex; align-items: center; gap: 10px; backdrop-filter: blur(8px);
+  white-space: nowrap; pointer-events: none;
+}
+.pill-icon { font-size: 20px; }
+.pill-text { color: white; font-size: 14px; font-weight: 600; }
+.pill-dim { color: #00ff88; font-size: 14px; font-weight: 800; }
+
+/* measure steps */
+.measure-steps {
+  position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; pointer-events: none;
+}
+.mstep { background: rgba(0,0,0,0.55); border: 2px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 5px 14px; color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; }
+.mstep.active { border-color: #00ff88; color: #00ff88; }
+.mstep.done { border-color: #60a5fa; color: #60a5fa; background: rgba(96,165,250,0.15); }
+
+/* bottom bar */
+.cam-bottom { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; padding-bottom: calc(16px + env(safe-area-inset-bottom,0)); background: linear-gradient(transparent, rgba(0,0,0,0.8)); display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.cam-action-row { display: flex; gap: 12px; align-items: center; width: 100%; justify-content: center; }
+.cam-btn { background: rgba(255,255,255,0.18); border: none; color: white; padding: 12px 22px; border-radius: 22px; font-size: 14px; font-weight: 600; cursor: pointer; backdrop-filter: blur(6px); -webkit-tap-highlight-color: transparent; }
+.cam-btn:active { transform: scale(0.95); }
+.cam-btn-primary { background: var(--blue); }
+.cam-btn-green { background: var(--green); }
+.cam-hint { color: rgba(255,255,255,0.75); font-size: 13px; text-align: center; }
+
+/* result display */
 .photo-preview { width: 100%; border-radius: 10px; overflow: hidden; background: #f3f4f6; min-height: 120px; display: flex; align-items: center; justify-content: center; }
 .photo-preview img { width: 100%; border-radius: 10px; display: block; }
 .photo-placeholder { color: var(--gray); font-size: 14px; text-align: center; padding: 30px; }
 .photo-placeholder .icon { font-size: 36px; display: block; margin-bottom: 8px; }
 .misure-display { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0; }
-.misura-box { background: var(--blue-light); border-radius: 10px; padding: 12px; text-align: center; }
+.misura-box { background: var(--blue-light); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: background 0.15s; }
+.misura-box:active { background: #c7d9fb; }
 .misura-box .lbl { font-size: 11px; color: var(--blue); font-weight: 700; }
 .misura-box .val { font-size: 22px; font-weight: 800; color: var(--blue-dark); }
 .misura-box .unt { font-size: 11px; color: var(--gray); }
+.misura-box.empty-dim { background: #f3f4f6; }
+.misura-box.empty-dim .val { color: #9ca3af; font-size: 18px; }
+
+/* list */
 .ricambio-item { background: white; border-radius: 14px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 12px; border-left: 4px solid var(--blue); }
 .ricambio-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
 .ricambio-code { font-weight: 700; font-size: 16px; }
 .ricambio-date { font-size: 11px; color: var(--gray); }
-.ricambio-misure { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .tag { background: var(--blue-light); color: var(--blue-dark); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
 .tag.green { background: #d1fae5; color: #065f46; }
-.ricambio-note { font-size: 13px; color: var(--gray); font-style: italic; margin-top: 4px; }
 .ricambio-thumb { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; margin-left: 10px; flex-shrink: 0; }
+.ricambio-note { font-size: 13px; color: var(--gray); font-style: italic; margin-top: 4px; }
 .empty { text-align: center; padding: 40px 20px; color: var(--gray); }
 .empty .icon { font-size: 48px; margin-bottom: 12px; }
+
+/* steps indicator */
+.steps { display: flex; align-items: center; margin-bottom: 20px; }
+.step { display: flex; align-items: center; gap: 6px; flex: 1; }
+.step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.step.done .step-dot { background: var(--green); color: white; }
+.step.active .step-dot { background: var(--blue); color: white; }
+.step.pending .step-dot { background: var(--border); color: var(--gray); }
+.step-line { flex: 1; height: 2px; background: var(--border); margin: 0 4px; }
+
+/* bottom nav */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid var(--border); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom,0); }
-.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0; border: none; background: none; cursor: pointer; color: var(--gray); font-size: 11px; gap: 3px; -webkit-tap-highlight-color: transparent; }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0; border: none; background: none; cursor: pointer; color: var(--gray); font-size: 11px; gap: 3px; }
 .nav-btn.active { color: var(--blue); }
 .nav-btn .ni { font-size: 22px; }
 .main-content { padding-bottom: 80px; }
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1f2937; color: white; padding: 12px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-/* AR status badge */
-.ar-status {
-  position: absolute; top: 70px; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(0,0,0,0.6); border-radius: 20px; padding: 6px 14px;
-  backdrop-filter: blur(6px);
-}
-.ar-dot { width: 10px; height: 10px; border-radius: 50%; background: #aaa; flex-shrink: 0; }
-.ar-dot.found { background: #00ff88; box-shadow: 0 0 6px #00ff88; }
-.ar-dot.searching { background: #f59e0b; animation: pulse 1s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.ar-status-text { font-size: 12px; color: white; white-space: nowrap; }
-/* Scan guide overlay */
-.scan-guide {
-  position: absolute; inset: 0; pointer-events: none;
-  display: flex; align-items: center; justify-content: center;
-}
-.scan-guide-inner {
-  border: 2px dashed rgba(255,255,255,0.3);
-  border-radius: 12px;
-  width: 85%; height: 55%;
-  position: relative;
-}
-.corner { position: absolute; width: 20px; height: 20px; border-color: white; border-style: solid; }
-.corner.tl { top:-2px; left:-2px; border-width: 3px 0 0 3px; }
-.corner.tr { top:-2px; right:-2px; border-width: 3px 3px 0 0; }
-.corner.bl { bottom:-2px; left:-2px; border-width: 0 0 3px 3px; }
-.corner.br { bottom:-2px; right:-2px; border-width: 0 3px 3px 0; }
+
+/* calibration badge */
+.calib-badge { position: absolute; top: 70px; right: 14px; background: rgba(0,0,0,0.6); border-radius: 12px; padding: 6px 12px; color: white; font-size: 12px; pointer-events: none; }
+.calib-badge.ok { color: #00ff88; }
+.calib-badge.warn { color: #f59e0b; }
 </style>
 </head>
 <body>
@@ -162,34 +176,47 @@ textarea { resize: vertical; min-height: 80px; }
             <div style="font-weight:700;font-size:14px;margin-bottom:4px;">Prepara la carta di credito</div>
             <div style="font-size:13px;color:#78350f;line-height:1.5;">
               Posiziona la carta <strong>piatta accanto al pezzo</strong> sul tavolo bianco.<br>
-              Tienila ben visibile — serve per calibrare la scala.
+              Prima misurerai la carta (per calibrare), poi il pezzo.
             </div>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">📸 Foto &amp; Misure AR</div>
+        <div class="card-title">📐 Misure rilevate</div>
+        <div class="misure-display">
+          <div class="misura-box" id="box-l" onclick="remeasureDim('l')">
+            <div class="lbl">LUNGH.</div>
+            <div class="val" id="val-l">—</div>
+            <div class="unt">mm</div>
+          </div>
+          <div class="misura-box" id="box-w" onclick="remeasureDim('w')">
+            <div class="lbl">LARGH.</div>
+            <div class="val" id="val-w">—</div>
+            <div class="unt">mm</div>
+          </div>
+          <div class="misura-box" id="box-h" onclick="remeasureDim('h')">
+            <div class="lbl">ALTEZZA</div>
+            <div class="val" id="val-h">—</div>
+            <div class="unt">mm</div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:12px;">Tocca una misura per rimisurarla</p>
+
         <div id="photo-preview-area" class="photo-preview" style="margin-bottom:12px;">
           <div class="photo-placeholder"><span class="icon">📷</span>Nessuna foto ancora</div>
         </div>
-        <div id="misure-result" style="display:none;">
-          <div class="misure-display">
-            <div class="misura-box"><div class="lbl">LUNGH.</div><div class="val" id="val-l">—</div><div class="unt">mm</div></div>
-            <div class="misura-box"><div class="lbl">LARGH.</div><div class="val" id="val-w">—</div><div class="unt">mm</div></div>
-            <div class="misura-box"><div class="lbl">ALTEZZA</div><div class="val" id="val-h">—</div><div class="unt">mm</div></div>
-          </div>
-          <p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:4px;">Stima AR ±5mm — correggi se necessario</p>
-        </div>
-        <div style="margin-top:12px;">
-          <label style="font-size:12px;color:var(--gray);margin-bottom:8px;">Inserisci o correggi manualmente (mm):</label>
+
+        <button class="btn btn-outline" onclick="startMeasureFlow()">📏 Avvia Misurazione AR</button>
+
+        <div style="margin-top:16px;">
+          <label style="font-size:12px;color:var(--gray);margin-bottom:8px;">Oppure inserisci manualmente (mm):</label>
           <div class="input-row">
-            <div class="input-unit"><input type="number" id="man-l" placeholder="L"><span>L</span></div>
-            <div class="input-unit"><input type="number" id="man-w" placeholder="W"><span>W</span></div>
-            <div class="input-unit"><input type="number" id="man-h" placeholder="H"><span>H</span></div>
+            <div class="input-unit"><input type="number" id="man-l" placeholder="L" oninput="syncManual('l')"><span>L</span></div>
+            <div class="input-unit"><input type="number" id="man-w" placeholder="W" oninput="syncManual('w')"><span>W</span></div>
+            <div class="input-unit"><input type="number" id="man-h" placeholder="H" oninput="syncManual('h')"><span>H</span></div>
           </div>
         </div>
-        <button class="btn btn-outline" style="margin-top:14px;" onclick="openCamera()">📷 Apri Fotocamera AR</button>
       </div>
 
       <div class="btn-row">
@@ -241,7 +268,7 @@ textarea { resize: vertical; min-height: 80px; }
       <div class="card-title">🗑️ Dati</div>
       <button class="btn btn-red" onclick="clearAll()">Cancella tutti i dati</button>
     </div>
-    <div style="text-align:center;padding:20px;color:var(--gray);font-size:12px;">MisuraRicambi v1.1 — Ghibli &amp; Wirbel</div>
+    <div style="text-align:center;padding:20px;color:var(--gray);font-size:12px;">MisuraRicambi v2.0 — Ghibli &amp; Wirbel</div>
   </div>
 </div>
 
@@ -254,86 +281,124 @@ textarea { resize: vertical; min-height: 80px; }
 
 <div class="toast" id="toast"></div>
 
-<!-- CAMERA AR -->
+<!-- ══════════════════════════════════════════
+     CAMERA MEASUREMENT OVERLAY
+     ══════════════════════════════════════════ -->
 <div id="camera-container">
   <video id="video" autoplay playsinline muted></video>
-  <canvas id="canvas-ar"></canvas>
-
-  <!-- Scan guide frame -->
-  <div class="scan-guide">
-    <div class="scan-guide-inner">
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
-    </div>
-  </div>
+  <canvas id="canvas-measure"></canvas>
 
   <div class="cam-top-bar">
     <div class="cam-code-badge" id="cam-code-label">—</div>
   </div>
 
-  <!-- AR status indicator -->
-  <div class="ar-status" id="ar-status">
-    <div class="ar-dot searching" id="ar-dot-card"></div>
-    <div class="ar-status-text" id="ar-status-text">Cerco la carta...</div>
+  <!-- What to measure pill -->
+  <div class="measure-pill" id="measure-pill">
+    <span class="pill-icon" id="pill-icon">💳</span>
+    <span class="pill-text" id="pill-text">Calibra carta</span>
+    <span class="pill-dim" id="pill-dim"></span>
   </div>
 
-  <div class="cam-ui">
-    <div class="cam-instructions" id="cam-instructions">💳 Posiziona il pezzo con la carta accanto su sfondo chiaro</div>
-    <div class="cam-btn-row">
-      <button class="cam-close" onclick="closeCamera()">✕ Annulla</button>
-      <button class="cam-snap" id="cam-snap-btn" onclick="snapPhoto()" title="Scatta"></button>
-      <button class="cam-close" onclick="manualMeasure()">✏️ Manuale</button>
+  <!-- Step indicators -->
+  <div class="measure-steps" id="measure-steps">
+    <div class="mstep" id="mstep-card">💳 Carta</div>
+    <div class="mstep" id="mstep-l">↔ Lungh.</div>
+    <div class="mstep" id="mstep-w">↕ Largh.</div>
+    <div class="mstep" id="mstep-h">↑ Altezza</div>
+  </div>
+
+  <!-- Calibration badge -->
+  <div class="calib-badge warn" id="calib-badge">⚠️ Non calibrato</div>
+
+  <!-- Bottom controls -->
+  <div class="cam-bottom">
+    <div class="cam-hint" id="cam-hint">Tocca il primo punto della carta</div>
+    <div class="cam-action-row">
+      <button class="cam-btn" onclick="undoLastPoint()">↩ Annulla punto</button>
+      <button class="cam-btn" onclick="skipDimension()" id="btn-skip">Salta →</button>
+      <button class="cam-btn" onclick="closeCamera()">✕ Chiudi</button>
+    </div>
+    <div class="cam-action-row" id="confirm-row" style="display:none;">
+      <button class="cam-btn cam-btn-green" onclick="confirmAndClose()" style="font-size:16px;padding:14px 32px;">✅ Conferma misure</button>
     </div>
   </div>
 </div>
 
 <script>
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
 let ricambi = JSON.parse(localStorage.getItem('ricambi_ghibli') || '[]');
 let currentPhoto = null;
 let currentMisure = { l: null, w: null, h: null };
 let videoStream = null;
-let arLoopId = null;
-let arState = { cardFound: false, partFound: false };
-// Card reference: 85.6 x 54 mm, aspect ratio ~1.585
-const CARD_W_MM = 85.6, CARD_H_MM = 54.0, CARD_RATIO = 85.6 / 54.0;
 
-// ── NAVIGATION ──────────────────────────────────────────
+// Measurement session state
+const CARD_W_MM = 85.6, CARD_H_MM = 54.0;
+let mmPerPx = null;         // calibration: real mm per canvas pixel
+let measurePhase = 'card';  // 'card' | 'l' | 'w' | 'h' | 'done'
+let remeasureTarget = null; // when remeasuring single dim
+let points = [];            // current segment points [{x,y}]
+let segments = {};          // card:{p1,p2,mm}, l:{p1,p2,mm}, w:{p1,p2,mm}, h:{p1,p2,mm}
+let canvasScale = 1;        // ratio canvas CSS size / video resolution
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  document.getElementById('nav-' + name).classList.add('active');
-  if (name === 'lista') renderList();
-  if (name === 'settings') renderStats();
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  if (name==='lista') renderList();
+  if (name==='settings') renderStats();
 }
-
 function setStep(n) {
-  for (let i = 1; i <= 3; i++) {
-    const el = document.getElementById('step' + i);
-    el.className = 'step ' + (i < n ? 'done' : i === n ? 'active' : 'pending');
+  for (let i=1;i<=3;i++) {
+    const el=document.getElementById('step'+i);
+    el.className='step '+(i<n?'done':i===n?'active':'pending');
   }
 }
 function goStep2() {
   if (!document.getElementById('codice').value.trim()) { showToast('⚠️ Inserisci il codice ricambio'); return; }
-  document.getElementById('form-step1').style.display = 'none';
-  document.getElementById('form-step2').style.display = 'block';
-  document.getElementById('cam-code-label').textContent = document.getElementById('codice').value.trim().toUpperCase();
+  document.getElementById('form-step1').style.display='none';
+  document.getElementById('form-step2').style.display='block';
+  document.getElementById('cam-code-label').textContent=document.getElementById('codice').value.trim().toUpperCase();
   setStep(2);
 }
 function goStep1() { document.getElementById('form-step1').style.display='block'; document.getElementById('form-step2').style.display='none'; setStep(1); }
 function goStep3() {
-  if (!getMisura('l') || !getMisura('w')) { showToast('⚠️ Inserisci almeno lunghezza e larghezza'); return; }
+  if (!getMisura('l')||!getMisura('w')) { showToast('⚠️ Inserisci almeno lunghezza e larghezza'); return; }
   document.getElementById('form-step2').style.display='none'; document.getElementById('form-step3').style.display='block'; setStep(3); renderRiepilogo();
 }
 function goStep2b() { document.getElementById('form-step3').style.display='none'; document.getElementById('form-step2').style.display='block'; setStep(2); }
-function getMisura(dim) { return parseFloat(document.getElementById('man-'+dim).value) || currentMisure[dim]; }
+function getMisura(dim) { return parseFloat(document.getElementById('man-'+dim).value)||currentMisure[dim]; }
+function syncManual(dim) {
+  const v = parseFloat(document.getElementById('man-'+dim).value);
+  if (v) { currentMisure[dim]=v; document.getElementById('val-'+dim).textContent=v; }
+}
 
-// ── CAMERA ──────────────────────────────────────────────
-function openCamera() {
+// ═══════════════════════════════════════════════════════
+// CAMERA OPEN / CLOSE
+// ═══════════════════════════════════════════════════════
+function startMeasureFlow() {
+  mmPerPx = null; segments = {}; points = []; measurePhase = 'card'; remeasureTarget = null;
+  openCamera('card');
+}
+
+function remeasureDim(dim) {
+  if (!mmPerPx) { showToast('Avvia prima la misurazione AR per calibrare'); return; }
+  remeasureTarget = dim; points = [];
+  measurePhase = dim;
+  openCamera(dim);
+}
+
+function openCamera(phase) {
+  measurePhase = phase;
+  points = [];
   document.getElementById('camera-container').classList.add('open');
-  setARStatus('searching', 'Cerco la carta di credito...');
-  document.getElementById('cam-instructions').textContent = '💳 Posiziona il pezzo con la carta su sfondo chiaro';
-  arState = { cardFound: false, partFound: false };
+  document.getElementById('confirm-row').style.display = 'none';
+  updatePhaseUI();
 
   navigator.mediaDevices.getUserMedia({
     video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } }
@@ -341,393 +406,337 @@ function openCamera() {
     videoStream = stream;
     const video = document.getElementById('video');
     video.srcObject = stream;
-    video.onloadedmetadata = () => { startARLoop(); };
+    video.onloadedmetadata = () => {
+      resizeCanvas();
+      requestAnimationFrame(drawLoop);
+    };
   }).catch(err => {
-    showToast('⚠️ Fotocamera non disponibile: ' + err.message);
+    showToast('⚠️ Fotocamera: ' + err.message);
     closeCamera();
   });
 }
 
-function closeCamera() {
-  if (arLoopId) { clearInterval(arLoopId); arLoopId = null; }
-  if (videoStream) { videoStream.getTracks().forEach(t => t.stop()); videoStream = null; }
-  document.getElementById('camera-container').classList.remove('open');
-  // Clear canvas
-  const c = document.getElementById('canvas-ar');
-  c.getContext('2d').clearRect(0, 0, c.width, c.height);
-}
-
-function setARStatus(state, text) {
-  const dot = document.getElementById('ar-dot-card');
-  const txt = document.getElementById('ar-status-text');
-  dot.className = 'ar-dot ' + state;
-  txt.textContent = text;
-}
-
-// ── AR ANALYSIS LOOP ────────────────────────────────────
-function startARLoop() {
-  if (arLoopId) clearInterval(arLoopId);
-  arLoopId = setInterval(analyzeFrame, 600);
-}
-
-function analyzeFrame() {
+function resizeCanvas() {
   const video = document.getElementById('video');
-  if (!video.videoWidth) return;
+  const canvas = document.getElementById('canvas-measure');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  // CSS fills the screen; track scale for touch → canvas mapping
+  canvasScale = video.videoWidth / canvas.offsetWidth;
+}
 
-  // Work on downscaled canvas for performance
-  const SCALE = 0.25;
-  const W = Math.floor(video.videoWidth * SCALE);
-  const H = Math.floor(video.videoHeight * SCALE);
+function closeCamera() {
+  if (videoStream) { videoStream.getTracks().forEach(t=>t.stop()); videoStream=null; }
+  document.getElementById('camera-container').classList.remove('open');
+}
 
-  const offscreen = document.createElement('canvas');
-  offscreen.width = W; offscreen.height = H;
-  const ctx = offscreen.getContext('2d');
-  ctx.drawImage(video, 0, 0, W, H);
+// ═══════════════════════════════════════════════════════
+// TOUCH HANDLING
+// ═══════════════════════════════════════════════════════
+document.getElementById('canvas-measure').addEventListener('click', function(e) {
+  if (!videoStream) return;
+  const rect = this.getBoundingClientRect();
+  // Convert CSS pixels → canvas pixels
+  const x = (e.clientX - rect.left) * canvasScale;
+  const y = (e.clientY - rect.top) * canvasScale;
+  addPoint(x, y);
+});
 
-  const imgData = ctx.getImageData(0, 0, W, H);
-  const d = imgData.data;
+// Touch support
+document.getElementById('canvas-measure').addEventListener('touchend', function(e) {
+  if (!videoStream) return;
+  e.preventDefault();
+  const touch = e.changedTouches[0];
+  const rect = this.getBoundingClientRect();
+  const x = (touch.clientX - rect.left) * canvasScale;
+  const y = (touch.clientY - rect.top) * canvasScale;
+  addPoint(x, y);
+}, { passive: false });
 
-  // ── Step 1: build grayscale + detect dark objects on light background ──
-  const gray = new Float32Array(W * H);
-  for (let i = 0; i < W * H; i++) {
-    gray[i] = (d[i*4]*0.299 + d[i*4+1]*0.587 + d[i*4+2]*0.114);
-  }
+function addPoint(x, y) {
+  if (measurePhase === 'done') return;
+  points.push({ x, y });
 
-  // Estimate background luminance (median of border pixels)
-  let borderLums = [];
-  for (let x = 0; x < W; x++) { borderLums.push(gray[x]); borderLums.push(gray[(H-1)*W+x]); }
-  for (let y = 0; y < H; y++) { borderLums.push(gray[y*W]); borderLums.push(gray[y*W+W-1]); }
-  borderLums.sort((a,b)=>a-b);
-  const bgLum = borderLums[Math.floor(borderLums.length*0.6)]; // 60th percentile = background estimate
+  if (points.length === 1) {
+    // First point placed — wait for second
+    updateHint('Ottimo! Ora tocca il secondo punto');
+  } else if (points.length === 2) {
+    // Segment complete
+    const p1 = points[0], p2 = points[1];
+    const pxDist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
 
-  // Threshold: pixels significantly darker than background are "foreground"
-  const threshold = bgLum - 35;
+    if (measurePhase === 'card') {
+      // Calibration: user measures the LONG side of the card (85.6mm)
+      mmPerPx = CARD_W_MM / pxDist;
+      segments.card = { p1, p2, mm: CARD_W_MM };
+      document.getElementById('calib-badge').textContent = '✅ Calibrato (1px = ' + mmPerPx.toFixed(3) + 'mm)';
+      document.getElementById('calib-badge').className = 'calib-badge ok';
+      points = [];
+      measurePhase = remeasureTarget || 'l';
+      updatePhaseUI();
+      showToast('💳 Calibrazione OK!');
+    } else {
+      const mm = Math.round(pxDist * mmPerPx / 5) * 5;
+      segments[measurePhase] = { p1, p2, mm };
+      currentMisure[measurePhase] = mm;
+      document.getElementById('val-'+measurePhase).textContent = mm;
+      document.getElementById('man-'+measurePhase).value = mm;
+      points = [];
 
-  // ── Step 2: Connected component labeling (simple flood-fill via union-find) ──
-  // Mark foreground
-  const fg = new Uint8Array(W * H);
-  for (let i = 0; i < W * H; i++) fg[i] = gray[i] < threshold ? 1 : 0;
-
-  // Find bounding boxes of connected regions using row-sweep
-  const visited = new Uint8Array(W * H);
-  const regions = [];
-
-  for (let sy = 1; sy < H-1; sy++) {
-    for (let sx = 1; sx < W-1; sx++) {
-      const idx = sy*W+sx;
-      if (!fg[idx] || visited[idx]) continue;
-      // BFS
-      const queue = [idx];
-      visited[idx] = 1;
-      let minX=sx,maxX=sx,minY=sy,maxY=sy, size=0;
-      while (queue.length) {
-        const cur = queue.pop();
-        const cx = cur % W, cy = Math.floor(cur/W);
-        if (cx < minX) minX=cx; if (cx > maxX) maxX=cx;
-        if (cy < minY) minY=cy; if (cy > maxY) maxY=cy;
-        size++;
-        const neighbors = [cur-1,cur+1,cur-W,cur+W];
-        for (const nb of neighbors) {
-          if (nb>=0 && nb<W*H && fg[nb] && !visited[nb]) { visited[nb]=1; queue.push(nb); }
+      if (remeasureTarget) {
+        // Done remeasuring one dim
+        measurePhase = 'done';
+        showConfirmOrClose();
+      } else {
+        // Advance to next dimension
+        const order = ['l','w','h'];
+        const idx = order.indexOf(measurePhase);
+        if (idx < order.length - 1) {
+          measurePhase = order[idx + 1];
+          updatePhaseUI();
+        } else {
+          measurePhase = 'done';
+          showConfirmOrClose();
         }
       }
-      if (size > 40) regions.push({ minX, maxX, minY, maxY, size, w: maxX-minX, h: maxY-minY });
-    }
-  }
-
-  if (regions.length === 0) {
-    setARStatus('searching', 'Nessun oggetto rilevato...');
-    document.getElementById('cam-instructions').textContent = '⚠️ Avvicina la camera, sfondo troppo uniforme?';
-    return;
-  }
-
-  // ── Step 3: Find the credit card region ──
-  // Card signature: aspect ratio close to 1.585, relatively small, rectangular
-  let cardRegion = null;
-  let bestCardScore = Infinity;
-
-  for (const r of regions) {
-    if (r.w < 8 || r.h < 8) continue;
-    const ratio = r.w / r.h;
-    // Accept both landscape and portrait card
-    const ratioDiff = Math.min(Math.abs(ratio - CARD_RATIO), Math.abs(ratio - 1/CARD_RATIO));
-    const fillRatio = r.size / (r.w * r.h); // how "solid/filled" the region is
-    // Card should be relatively solid and have correct aspect ratio
-    if (ratioDiff < 0.35 && fillRatio > 0.45) {
-      const score = ratioDiff;
-      if (score < bestCardScore) { bestCardScore = score; cardRegion = r; }
-    }
-  }
-
-  // ── Step 4: Find the part (largest region that is NOT the card) ──
-  let partRegion = null;
-  let maxPartSize = 0;
-  for (const r of regions) {
-    if (r === cardRegion) continue;
-    if (r.w < 15 || r.h < 15) continue;
-    if (r.size > maxPartSize) { maxPartSize = r.size; partRegion = r; }
-  }
-
-  // ── Step 5: Compute scale and measurements ──
-  let scaleX = null, scaleY = null;
-  if (cardRegion) {
-    const cardPxW = cardRegion.w, cardPxH = cardRegion.h;
-    // Determine card orientation
-    if (cardPxW >= cardPxH) {
-      scaleX = CARD_W_MM / cardPxW;
-      scaleY = CARD_H_MM / cardPxH;
-    } else {
-      scaleX = CARD_H_MM / cardPxW;
-      scaleY = CARD_W_MM / cardPxH;
-    }
-    arState.cardFound = true;
-    setARStatus('found', 'Carta trovata ✓ — Cerco il pezzo...');
-  } else {
-    arState.cardFound = false;
-    setARStatus('searching', 'Carta non trovata — avvicinala');
-    document.getElementById('cam-instructions').textContent = '💳 Non riesco a vedere la carta — riposizionala';
-  }
-
-  // Scale factor: average of x/y, converted back from downscaled space
-  const scale = scaleX ? (scaleX + scaleY) / 2 : null;
-
-  // ── Step 6: Draw overlay on full-res canvas ──
-  const arCanvas = document.getElementById('canvas-ar');
-  arCanvas.width = video.videoWidth;
-  arCanvas.height = video.videoHeight;
-  const actx = arCanvas.getContext('2d');
-  actx.clearRect(0, 0, arCanvas.width, arCanvas.height);
-  const upscale = 1 / SCALE;
-
-  // Draw card box (blue)
-  if (cardRegion) {
-    const cx = cardRegion.minX * upscale, cy = cardRegion.minY * upscale;
-    const cw = cardRegion.w * upscale, ch = cardRegion.h * upscale;
-    actx.strokeStyle = '#60a5fa';
-    actx.lineWidth = 2;
-    actx.setLineDash([6, 3]);
-    actx.strokeRect(cx, cy, cw, ch);
-    actx.setLineDash([]);
-    actx.fillStyle = 'rgba(96,165,250,0.15)';
-    actx.fillRect(cx, cy, cw, ch);
-    actx.fillStyle = '#60a5fa';
-    actx.font = 'bold 14px -apple-system, sans-serif';
-    actx.fillText('💳 Riferimento', cx + 4, cy - 6);
-  }
-
-  // Draw part box (green) + measurements
-  let mL = null, mW = null, mH = null;
-  if (partRegion) {
-    const px = partRegion.minX * upscale, py = partRegion.minY * upscale;
-    const pw = partRegion.w * upscale, ph = partRegion.h * upscale;
-
-    if (scale) {
-      // Measurements: L = longer side, W = shorter side
-      const rawL = Math.max(partRegion.w, partRegion.h) * scale;
-      const rawW = Math.min(partRegion.w, partRegion.h) * scale;
-      mL = Math.round(rawL / 5) * 5;
-      mW = Math.round(rawW / 5) * 5;
-      // Height estimation: use 30% of longer dimension (conservative for flat parts)
-      mH = Math.round((rawL * 0.25) / 5) * 5;
-      mL = Math.max(5, Math.min(800, mL));
-      mW = Math.max(5, Math.min(mL, mW));
-      mH = Math.max(5, Math.min(400, mH));
-
-      // Draw bounding box
-      actx.strokeStyle = '#00ff88';
-      actx.lineWidth = 3;
-      actx.strokeRect(px - 4, py - 4, pw + 8, ph + 8);
-      // Corner dots
-      [[px-4,py-4],[px+pw+4,py-4],[px-4,py+ph+4],[px+pw+4,py+ph+4]].forEach(([cx,cy]) => {
-        actx.beginPath(); actx.arc(cx,cy,6,0,Math.PI*2);
-        actx.fillStyle='#00ff88'; actx.fill();
-      });
-      // Dimension lines
-      actx.strokeStyle = '#00ff88'; actx.lineWidth = 1.5;
-      // Width arrow (top)
-      actx.beginPath(); actx.moveTo(px-4, py-20); actx.lineTo(px+pw+4, py-20); actx.stroke();
-      actx.beginPath(); actx.moveTo(px-4,py-25); actx.lineTo(px-4,py-15); actx.stroke();
-      actx.beginPath(); actx.moveTo(px+pw+4,py-25); actx.lineTo(px+pw+4,py-15); actx.stroke();
-      actx.fillStyle='#00ff88';
-      actx.font = 'bold 16px -apple-system, sans-serif';
-      actx.textAlign='center';
-      actx.fillText(mL+'mm', px + pw/2, py - 24);
-      actx.textAlign='left';
-      // Height arrow (right)
-      actx.beginPath(); actx.moveTo(px+pw+18, py-4); actx.lineTo(px+pw+18, py+ph+4); actx.stroke();
-      actx.fillText(mW+'mm', px+pw+22, py+ph/2+6);
-
-      currentMisure = { l: mL, w: mW, h: mH };
-      arState.partFound = true;
-      setARStatus('found', 'Pezzo rilevato ✓  ' + mL + '×' + mW + '×' + mH + 'mm');
-      document.getElementById('cam-instructions').textContent = '✅ Pronto — Scatta per confermare';
-    }
-  } else {
-    arState.partFound = false;
-    if (arState.cardFound) {
-      setARStatus('searching', 'Carta trovata ✓ — pezzo non visto');
-      document.getElementById('cam-instructions').textContent = '🔍 Carta trovata! Assicurati che il pezzo sia visibile';
     }
   }
 }
 
-function snapPhoto() {
+function showConfirmOrClose() {
+  updatePhaseUI();
+  document.getElementById('confirm-row').style.display = 'flex';
+  document.getElementById('cam-hint').textContent = '✅ Misure completate — conferma o ri-misura toccando i box';
+}
+
+function confirmAndClose() {
+  // Take snapshot with all segments drawn
+  takeSnapshot();
+}
+
+function takeSnapshot() {
   const video = document.getElementById('video');
   const snap = document.createElement('canvas');
-  snap.width = video.videoWidth || 1280;
-  snap.height = video.videoHeight || 720;
+  snap.width = video.videoWidth; snap.height = video.videoHeight;
   const ctx = snap.getContext('2d');
   ctx.drawImage(video, 0, 0);
-  // Overlay the AR canvas on top
-  const arCanvas = document.getElementById('canvas-ar');
-  if (arCanvas.width > 0) ctx.drawImage(arCanvas, 0, 0, snap.width, snap.height);
-
+  // Draw all segments on photo
+  drawAllSegments(ctx, snap.width, snap.height);
   currentPhoto = snap.toDataURL('image/jpeg', 0.82);
   closeCamera();
+  document.getElementById('photo-preview-area').innerHTML = '<img src="'+currentPhoto+'" alt="Foto ricambio">';
+  showToast('✅ Misure salvate!');
+}
 
-  document.getElementById('photo-preview-area').innerHTML = '<img src="' + currentPhoto + '" alt="Foto ricambio">';
-  if (currentMisure.l) {
-    document.getElementById('val-l').textContent = currentMisure.l;
-    document.getElementById('val-w').textContent = currentMisure.w;
-    document.getElementById('val-h').textContent = currentMisure.h;
-    document.getElementById('misure-result').style.display = 'block';
-    document.getElementById('man-l').value = currentMisure.l;
-    document.getElementById('man-w').value = currentMisure.w;
-    document.getElementById('man-h').value = currentMisure.h;
-    showToast('📸 Misure salvate: ' + currentMisure.l + '×' + currentMisure.w + '×' + currentMisure.h + ' mm');
-  } else {
-    showToast('📸 Foto scattata — inserisci le misure');
+function undoLastPoint() {
+  if (points.length > 0) { points.pop(); showToast('Punto rimosso'); }
+  else if (measurePhase !== 'card' && measurePhase !== 'done') {
+    const order = ['card','l','w','h'];
+    const idx = order.indexOf(measurePhase);
+    if (idx > 0) { measurePhase = order[idx-1]; delete segments[measurePhase]; updatePhaseUI(); showToast('Misura annullata'); }
   }
 }
 
-function manualMeasure() { closeCamera(); showToast('✏️ Inserisci le misure manualmente'); }
+function skipDimension() {
+  if (measurePhase === 'card') { showToast('⚠️ La calibrazione è obbligatoria'); return; }
+  points = [];
+  const order = ['l','w','h'];
+  const idx = order.indexOf(measurePhase);
+  if (idx < order.length-1) { measurePhase = order[idx+1]; updatePhaseUI(); }
+  else { measurePhase='done'; showConfirmOrClose(); }
+}
 
-// ── BARCODE SCAN ──────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// DRAW LOOP
+// ═══════════════════════════════════════════════════════
+let animFrameId = null;
+function drawLoop() {
+  if (!videoStream) return;
+  const canvas = document.getElementById('canvas-measure');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw crosshair at last point
+  if (points.length === 1) drawCrosshair(ctx, points[0].x, points[0].y, '#fff');
+
+  // Draw committed segments
+  drawAllSegments(ctx, canvas.width, canvas.height);
+
+  animFrameId = requestAnimationFrame(drawLoop);
+}
+
+function drawCrosshair(ctx, x, y, color) {
+  ctx.strokeStyle = color; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(x-18,y); ctx.lineTo(x+18,y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x,y-18); ctx.lineTo(x,y+18); ctx.stroke();
+  ctx.beginPath(); ctx.arc(x,y,6,0,Math.PI*2); ctx.strokeStyle=color; ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.fill();
+}
+
+function drawSegment(ctx, seg, color, label) {
+  const { p1, p2, mm } = seg;
+  // Line
+  ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(p1.x,p1.y); ctx.lineTo(p2.x,p2.y); ctx.stroke();
+  // End dots
+  [p1,p2].forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x,p.y,8,0,Math.PI*2);
+    ctx.fillStyle=color; ctx.fill();
+  });
+  // Label at midpoint
+  const mx=(p1.x+p2.x)/2, my=(p1.y+p2.y)/2;
+  const angle = Math.atan2(p2.y-p1.y, p2.x-p1.x);
+  ctx.save(); ctx.translate(mx,my); ctx.rotate(angle);
+  ctx.fillStyle='rgba(0,0,0,0.65)'; ctx.roundRect(-38,-14,76,24,8); ctx.fill();
+  ctx.fillStyle='white'; ctx.font='bold 14px -apple-system,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(label+(mm?(' '+mm+'mm'):''),0,0);
+  ctx.restore();
+}
+
+function drawAllSegments(ctx, W, H) {
+  if (segments.card) drawSegment(ctx, segments.card, '#60a5fa', '💳');
+  if (segments.l)    drawSegment(ctx, segments.l,    '#00ff88', '↔ L');
+  if (segments.w)    drawSegment(ctx, segments.w,    '#fbbf24', '↕ W');
+  if (segments.h)    drawSegment(ctx, segments.h,    '#f87171', '↑ H');
+}
+
+// ═══════════════════════════════════════════════════════
+// PHASE UI
+// ═══════════════════════════════════════════════════════
+const PHASE_CONFIG = {
+  card: { icon:'💳', text:'Misura il lato lungo della carta', hint:'Tocca il primo angolo della carta', step:'mstep-card' },
+  l:    { icon:'↔',  text:'Misura la LUNGHEZZA del pezzo',   hint:'Tocca il punto più a sinistra del pezzo', step:'mstep-l' },
+  w:    { icon:'↕',  text:'Misura la LARGHEZZA del pezzo',   hint:'Tocca il punto più in alto del pezzo', step:'mstep-w' },
+  h:    { icon:'↑',  text:'Misura l\'ALTEZZA del pezzo',     hint:'Tocca il punto in basso, poi il punto in alto', step:'mstep-h' },
+  done: { icon:'✅',  text:'Misure completate!',              hint:'Conferma o ri-misura', step:null }
+};
+
+function updatePhaseUI() {
+  const cfg = PHASE_CONFIG[measurePhase] || PHASE_CONFIG.done;
+  document.getElementById('pill-icon').textContent = cfg.icon;
+  document.getElementById('pill-text').textContent = cfg.text;
+  document.getElementById('cam-hint').textContent = cfg.hint;
+
+  // Update step pills
+  const order = ['card','l','w','h'];
+  const ids = ['mstep-card','mstep-l','mstep-w','mstep-h'];
+  const curIdx = order.indexOf(measurePhase);
+  ids.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (i < curIdx || segments[order[i]]) el.className = 'mstep done';
+    else if (i === curIdx) el.className = 'mstep active';
+    else el.className = 'mstep';
+  });
+
+  document.getElementById('btn-skip').style.display = (measurePhase==='card'||measurePhase==='done') ? 'none' : 'block';
+}
+
+// ═══════════════════════════════════════════════════════
+// BARCODE
+// ═══════════════════════════════════════════════════════
 function scanBarcode() {
   if ('BarcodeDetector' in window) {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(stream => {
-      const v = document.createElement('video'); v.srcObject = stream; v.play();
-      const det = new BarcodeDetector({ formats: ['code_128','code_39','ean_13','qr_code'] });
-      const iv = setInterval(() => {
-        det.detect(v).then(codes => {
-          if (codes.length > 0) { clearInterval(iv); stream.getTracks().forEach(t=>t.stop()); document.getElementById('codice').value = codes[0].rawValue.toUpperCase(); showToast('✅ Codice scansionato!'); }
-        }).catch(()=>{});
-      }, 300);
-      setTimeout(()=>{ clearInterval(iv); stream.getTracks().forEach(t=>t.stop()); }, 8000);
-    }).catch(()=>showToast('⚠️ Fotocamera non disponibile'));
-  } else {
-    showToast('Inserisci il codice manualmente'); document.getElementById('codice').focus();
-  }
+    navigator.mediaDevices.getUserMedia({ video:{facingMode:'environment'} }).then(stream => {
+      const v=document.createElement('video'); v.srcObject=stream; v.play();
+      const det=new BarcodeDetector({formats:['code_128','code_39','ean_13','qr_code']});
+      const iv=setInterval(()=>{ det.detect(v).then(codes=>{ if(codes.length>0){ clearInterval(iv); stream.getTracks().forEach(t=>t.stop()); document.getElementById('codice').value=codes[0].rawValue.toUpperCase(); showToast('✅ Codice scansionato!'); }}).catch(()=>{}); },300);
+      setTimeout(()=>{ clearInterval(iv); stream.getTracks().forEach(t=>t.stop()); },8000);
+    }).catch(()=>showToast('Inserisci il codice manualmente'));
+  } else { showToast('Inserisci il codice manualmente'); document.getElementById('codice').focus(); }
 }
 
-// ── SAVE ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// SAVE
+// ═══════════════════════════════════════════════════════
 function renderRiepilogo() {
-  const cod = document.getElementById('codice').value.trim().toUpperCase();
-  const cat = document.getElementById('categoria').value || '—';
-  const l=getMisura('l'), w=getMisura('w'), h=getMisura('h');
-  document.getElementById('riepilogo-content').innerHTML =
-    '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">' +
-    '<div style="flex:1;"><div style="font-size:20px;font-weight:800;margin-bottom:4px;">' + cod + '</div>' +
-    '<div style="font-size:13px;color:var(--gray);margin-bottom:12px;">' + cat + '</div>' +
-    '<div class="misure-display" style="margin:0;">' +
-    '<div class="misura-box"><div class="lbl">L</div><div class="val">' + (l||'?') + '</div><div class="unt">mm</div></div>' +
-    '<div class="misura-box"><div class="lbl">W</div><div class="val">' + (w||'?') + '</div><div class="unt">mm</div></div>' +
-    '<div class="misura-box"><div class="lbl">H</div><div class="val">' + (h||'?') + '</div><div class="unt">mm</div></div>' +
-    '</div></div>' + (currentPhoto ? '<img src="' + currentPhoto + '" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0;">' : '') + '</div>';
+  const cod=document.getElementById('codice').value.trim().toUpperCase();
+  const cat=document.getElementById('categoria').value||'—';
+  const l=getMisura('l'),w=getMisura('w'),h=getMisura('h');
+  document.getElementById('riepilogo-content').innerHTML=
+    '<div style="display:flex;justify-content:space-between;gap:12px;">'+
+    '<div style="flex:1;"><div style="font-size:20px;font-weight:800;margin-bottom:4px;">'+cod+'</div>'+
+    '<div style="font-size:13px;color:var(--gray);margin-bottom:12px;">'+cat+'</div>'+
+    '<div class="misure-display" style="margin:0;">'+
+    '<div class="misura-box"><div class="lbl">L</div><div class="val">'+(l||'?')+'</div><div class="unt">mm</div></div>'+
+    '<div class="misura-box"><div class="lbl">W</div><div class="val">'+(w||'?')+'</div><div class="unt">mm</div></div>'+
+    '<div class="misura-box"><div class="lbl">H</div><div class="val">'+(h||'?')+'</div><div class="unt">mm</div></div>'+
+    '</div></div>'+(currentPhoto?'<img src="'+currentPhoto+'" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0;">':'')+
+    '</div>';
 }
 
 function salvaRicambio() {
-  const cod = document.getElementById('codice').value.trim().toUpperCase();
-  const op = document.getElementById('setting-operator').value.trim() || 'Operatore';
-  const r = { id: Date.now(), codice: cod, categoria: document.getElementById('categoria').value||'Non specificata',
-    descrizione: document.getElementById('descrizione').value.trim(), lunghezza: getMisura('l'), larghezza: getMisura('w'),
-    altezza: getMisura('h'), note: document.getElementById('note').value.trim(), operatore: op,
-    data: new Date().toLocaleDateString('it-IT'), ora: new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}), foto: currentPhoto };
+  const cod=document.getElementById('codice').value.trim().toUpperCase();
+  const op=document.getElementById('setting-operator').value.trim()||'Operatore';
+  const r={ id:Date.now(), codice:cod, categoria:document.getElementById('categoria').value||'Non specificata',
+    descrizione:document.getElementById('descrizione').value.trim(), lunghezza:getMisura('l'), larghezza:getMisura('w'),
+    altezza:getMisura('h'), note:document.getElementById('note').value.trim(), operatore:op,
+    data:new Date().toLocaleDateString('it-IT'), ora:new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}), foto:currentPhoto };
   ricambi.unshift(r);
-  localStorage.setItem('ricambi_ghibli', JSON.stringify(ricambi));
+  localStorage.setItem('ricambi_ghibli',JSON.stringify(ricambi));
   updateBadge(); showToast('✅ Ricambio salvato!'); resetForm();
-  setTimeout(() => showPage('lista'), 700);
+  setTimeout(()=>showPage('lista'),700);
 }
 
 function resetForm() {
-  ['codice','descrizione','note','man-l','man-w','man-h'].forEach(id => document.getElementById(id).value='');
+  ['codice','descrizione','note','man-l','man-w','man-h'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('categoria').value='';
   currentPhoto=null; currentMisure={l:null,w:null,h:null};
   document.getElementById('form-step1').style.display='block';
   document.getElementById('form-step2').style.display='none';
   document.getElementById('form-step3').style.display='none';
   document.getElementById('photo-preview-area').innerHTML='<div class="photo-placeholder"><span class="icon">📷</span>Nessuna foto ancora</div>';
-  document.getElementById('misure-result').style.display='none';
+  ['l','w','h'].forEach(d=>{ document.getElementById('val-'+d).textContent='—'; document.getElementById('box-'+d).className='misura-box empty-dim'; });
   setStep(1);
+  mmPerPx=null; segments={}; points=[];
 }
 
-// ── LIST ─────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// LIST + EXCEL
+// ═══════════════════════════════════════════════════════
 function renderList(filter) {
-  filter = filter||'';
-  const container = document.getElementById('lista-container');
-  const filtered = ricambi.filter(r => !filter || r.codice.includes(filter.toUpperCase()) ||
-    r.categoria.toLowerCase().includes(filter.toLowerCase()) ||
-    (r.descrizione && r.descrizione.toLowerCase().includes(filter.toLowerCase())));
-  if (!filtered.length) {
-    container.innerHTML = '<div class="empty"><div class="icon">📦</div><p>' + (ricambi.length===0 ? 'Nessun ricambio ancora.<br>Aggiungi il primo dalla sezione +' : 'Nessun risultato') + '</p></div>';
-    return;
-  }
-  container.innerHTML = filtered.map(r =>
-    '<div class="ricambio-item"><div class="ricambio-header"><div>' +
-    '<div class="ricambio-code">' + r.codice + '</div>' +
-    '<div class="ricambio-date">📅 ' + r.data + ' ' + r.ora + ' · ' + r.operatore + '</div>' +
-    '</div>' + (r.foto ? '<img src="' + r.foto + '" class="ricambio-thumb">' : '') + '</div>' +
-    '<div class="ricambio-misure"><span class="tag">📐 ' + r.lunghezza + '×' + r.larghezza + '×' + r.altezza + ' mm</span>' +
-    '<span class="tag green">' + r.categoria + '</span></div>' +
-    (r.descrizione ? '<div class="ricambio-note">📦 ' + r.descrizione + '</div>' : '') +
-    (r.note ? '<div class="ricambio-note">📝 ' + r.note + '</div>' : '') +
-    '<div style="text-align:right;margin-top:10px;"><button class="btn btn-gray btn-sm" style="color:var(--red);" onclick="eliminaRicambio(' + r.id + ')">🗑️ Elimina</button></div></div>'
+  filter=filter||'';
+  const container=document.getElementById('lista-container');
+  const filtered=ricambi.filter(r=>!filter||r.codice.includes(filter.toUpperCase())||r.categoria.toLowerCase().includes(filter.toLowerCase())||(r.descrizione&&r.descrizione.toLowerCase().includes(filter.toLowerCase())));
+  if(!filtered.length){ container.innerHTML='<div class="empty"><div class="icon">📦</div><p>'+(ricambi.length===0?'Nessun ricambio ancora.<br>Aggiungi il primo dalla sezione +':'Nessun risultato')+'</p></div>'; return; }
+  container.innerHTML=filtered.map(r=>
+    '<div class="ricambio-item"><div class="ricambio-header"><div>'+
+    '<div class="ricambio-code">'+r.codice+'</div>'+
+    '<div class="ricambio-date">📅 '+r.data+' '+r.ora+' · '+r.operatore+'</div>'+
+    '</div>'+(r.foto?'<img src="'+r.foto+'" class="ricambio-thumb">':'')+'</div>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;"><span class="tag">📐 '+r.lunghezza+'×'+r.larghezza+'×'+r.altezza+' mm</span><span class="tag green">'+r.categoria+'</span></div>'+
+    (r.descrizione?'<div class="ricambio-note">📦 '+r.descrizione+'</div>':'')+
+    (r.note?'<div class="ricambio-note">📝 '+r.note+'</div>':'')+
+    '<div style="text-align:right;margin-top:10px;"><button class="btn btn-gray btn-sm" style="color:var(--red);" onclick="eliminaRicambio('+r.id+')">🗑️ Elimina</button></div></div>'
   ).join('');
 }
+function filterList(){ renderList(document.getElementById('search').value); }
+function eliminaRicambio(id){ if(!confirm('Eliminare?'))return; ricambi=ricambi.filter(r=>r.id!==id); localStorage.setItem('ricambi_ghibli',JSON.stringify(ricambi)); updateBadge(); renderList(document.getElementById('search').value); showToast('🗑️ Eliminato'); }
 
-function filterList() { renderList(document.getElementById('search').value); }
-function eliminaRicambio(id) {
-  if (!confirm('Eliminare?')) return;
-  ricambi = ricambi.filter(r => r.id !== id);
-  localStorage.setItem('ricambi_ghibli', JSON.stringify(ricambi));
-  updateBadge(); renderList(document.getElementById('search').value); showToast('🗑️ Eliminato');
-}
-
-// ── EXCEL ─────────────────────────────────────────────
-function esportaExcel() {
-  if (!ricambi.length) { showToast('⚠️ Nessun dato da esportare'); return; }
-  const rows = [['Codice','Categoria','Descrizione','Lunghezza (mm)','Larghezza (mm)','Altezza (mm)','Note','Operatore','Data','Ora']];
-  ricambi.forEach(r => rows.push([r.codice,r.categoria,r.descrizione||'',r.lunghezza||'',r.larghezza||'',r.altezza||'',r.note||'',r.operatore,r.data,r.ora]));
-  const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:18},{wch:22},{wch:30},{wch:16},{wch:16},{wch:16},{wch:30},{wch:16},{wch:12},{wch:8}];
-  XLSX.utils.book_append_sheet(wb, ws, 'Ricambi');
-  const wh = document.getElementById('setting-warehouse').value || 'Magazzino';
-  XLSX.writeFile(wb, wh + '_Ricambi_' + new Date().toLocaleDateString('it-IT').replace(/\//g,'-') + '.xlsx');
+function esportaExcel(){
+  if(!ricambi.length){ showToast('⚠️ Nessun dato'); return; }
+  const rows=[['Codice','Categoria','Descrizione','Lunghezza (mm)','Larghezza (mm)','Altezza (mm)','Note','Operatore','Data','Ora']];
+  ricambi.forEach(r=>rows.push([r.codice,r.categoria,r.descrizione||'',r.lunghezza||'',r.larghezza||'',r.altezza||'',r.note||'',r.operatore,r.data,r.ora]));
+  const wb=XLSX.utils.book_new(), ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[{wch:18},{wch:22},{wch:30},{wch:16},{wch:16},{wch:16},{wch:30},{wch:16},{wch:12},{wch:8}];
+  XLSX.utils.book_append_sheet(wb,ws,'Ricambi');
+  XLSX.writeFile(wb,(document.getElementById('setting-warehouse').value||'Magazzino')+'_Ricambi_'+new Date().toLocaleDateString('it-IT').replace(/\//g,'-')+'.xlsx');
   showToast('📊 Excel scaricato!');
 }
 
-// ── STATS / SETTINGS ──────────────────────────────────
-function renderStats() {
-  const cats = {};
-  ricambi.forEach(r => { cats[r.categoria]=(cats[r.categoria]||0)+1; });
-  const top = Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('stats-content').innerHTML =
-    '<div>📦 Totale ricambi: <strong>' + ricambi.length + '</strong></div>' +
-    '<div>📅 Ultima entrata: <strong>' + (ricambi.length ? ricambi[0].data+' '+ricambi[0].ora : '—') + '</strong></div>' +
-    '<div>🏆 Categoria top: <strong>' + (top ? top[0]+' ('+top[1]+')' : '—') + '</strong></div>' +
-    '<div>📸 Con foto: <strong>' + ricambi.filter(r=>r.foto).length + '</strong></div>';
+function renderStats(){
+  const cats={};
+  ricambi.forEach(r=>{ cats[r.categoria]=(cats[r.categoria]||0)+1; });
+  const top=Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('stats-content').innerHTML=
+    '<div>📦 Totale: <strong>'+ricambi.length+'</strong></div>'+
+    '<div>📅 Ultima: <strong>'+(ricambi.length?ricambi[0].data+' '+ricambi[0].ora:'—')+'</strong></div>'+
+    '<div>🏆 Cat. top: <strong>'+(top?top[0]+' ('+top[1]+')':'—')+'</strong></div>'+
+    '<div>📸 Con foto: <strong>'+ricambi.filter(r=>r.foto).length+'</strong></div>';
 }
-function clearAll() {
-  if (!confirm('Cancellare TUTTI i dati?')) return;
-  ricambi=[]; localStorage.removeItem('ricambi_ghibli'); updateBadge(); showToast('🗑️ Dati cancellati');
-}
-function updateBadge() { document.getElementById('headerCount').textContent = ricambi.length + ' pezzi'; }
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2800);
-}
+function clearAll(){ if(!confirm('Cancellare TUTTI i dati?'))return; ricambi=[]; localStorage.removeItem('ricambi_ghibli'); updateBadge(); showToast('🗑️ Dati cancellati'); }
+function updateBadge(){ document.getElementById('headerCount').textContent=ricambi.length+' pezzi'; }
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+
 updateBadge();
 </script>
 </body>
